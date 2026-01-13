@@ -56,6 +56,8 @@ export default function UserDetails() {
               className={`px-4 py-1 rounded-full text-sm font-semibold ${
                 user.role === 'Admin'
                   ? 'bg-red-100 text-red-600'
+                  : user.role === 'Manager'
+                  ? 'bg-yellow-100 text-yellow-600'
                   : 'bg-blue-100 text-blue-600'
               }`}
             >
