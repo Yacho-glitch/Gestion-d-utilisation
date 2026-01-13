@@ -11,7 +11,7 @@ export default function UserDetails() {
         return (
             <div className="text-center py-20">
                 <p className="text-gray-500 text-lg">
-                    User not found
+                    aucun utilisateur trouvé
                 </p>
                 <Link to="/" className="inline-block mt-4 text-blue-600 hover:underline">Back to users</Link>
             </div>
