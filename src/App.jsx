@@ -14,7 +14,7 @@ function App() {
       <nav className="bg-white shadow mb-6">
         <div className="max-w-5xl mx-auto px-4 py-4 flex justify-between items-center">
           <h1 className="text-xl font-bold text-blue-600">
-            User CRUD (Redux)
+            Gestion d'utilisateur
           </h1>
 
           <div className="space-x-4">
@@ -22,14 +22,14 @@ function App() {
               to="/"
               className="text-gray-700 hover:text-blue-600 font-medium"
             >
-              Home
+              Accueil
             </Link>
 
             <Link
               to="/add"
               className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
             >
-              Add User
+              Ajouter Utilisateur
             </Link>
           </div>
         </div>

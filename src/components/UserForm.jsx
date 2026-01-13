@@ -30,7 +30,7 @@ export default function UserForm({ user, onSubmit }) {
     return (
         <div className="max-w-md mx-auto bg-white shadow rounded-lg p-6">
       <h2 className="text-xl font-semibold mb-4">
-        {user ? 'Edit User' : 'Add User'}
+        {user ? 'Modifier utilisateur' : 'Ajouter utilisateur'}
       </h2>
 
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -38,7 +38,7 @@ export default function UserForm({ user, onSubmit }) {
         {/* Name */}
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            Name
+            Nom
           </label>
           <input
             type="text"
@@ -87,7 +87,7 @@ export default function UserForm({ user, onSubmit }) {
           type="submit"
           className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
         >
-          {user ? 'Update User' : 'Add User'}
+          {user ? 'Modifier utilisateur' : 'Ajouter utilisateur'}
         </button>
       </form>
     </div>

@@ -26,7 +26,7 @@ export default function UserList({ users }) {
       {/* Header */}
       <div className="px-6 py-4 border-b flex justify-between items-center">
         <h2 className="text-lg font-semibold text-gray-700">
-          Users List
+          List d'utilisateur
         </h2>
         <span className="text-sm text-gray-500">
           Total: {users.length}
@@ -38,7 +38,7 @@ export default function UserList({ users }) {
         <table className="min-w-full text-sm">
           <thead className="bg-gray-50 text-gray-600 uppercase text-xs">
             <tr>
-              <th className="px-6 py-3 text-left">Name</th>
+              <th className="px-6 py-3 text-left">Nom</th>
               <th className="px-6 py-3 text-left">Email</th>
               <th className="px-6 py-3 text-left">Role</th>
               <th className="px-6 py-3 text-right">Actions</th>
@@ -80,21 +80,21 @@ export default function UserList({ users }) {
                     to={`/user/${user.id}`}
                     className="inline-block text-blue-600 hover:underline"
                   >
-                    View
+                    Details
                   </Link>
 
                   <Link
                     to={`/edit/${user.id}`}
                     className="inline-block text-yellow-600 hover:underline"
                   >
-                    Edit
+                    Modifier
                   </Link>
 
                   <button
                     onClick={() => dispatch(deleteUser(user.id))}
                     className="text-red-600 hover:underline"
                   >
-                    Delete
+                    Supprimer
                   </button>
                 </td>
               </tr>
