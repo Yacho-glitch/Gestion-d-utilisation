@@ -65,14 +65,14 @@ export default function UserDetails() {
             </span>
           </div>
 
-          {/* <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between">
             <span className="text-gray-500 font-medium">
               Utilisateur ID
             </span>
             <span className="text-gray-800">
               #{user.id}
             </span>
-          </div> */}
+          </div>
 
         </div>
 
