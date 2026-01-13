@@ -53,13 +53,11 @@ export default function UserDetails() {
               Role
             </span>
             <span
-              className={`px-4 py-1 rounded-full text-sm font-semibold
-                ${
-                  user.role === 'Admin'
-                    ? 'bg-red-100 text-red-600'
-                    : 'bg-blue-100 text-blue-600'
-                }
-              `}
+              className={`px-4 py-1 rounded-full text-sm font-semibold ${
+                user.role === 'Admin'
+                  ? 'bg-red-100 text-red-600'
+                  : 'bg-blue-100 text-blue-600'
+              }`}
             >
               {user.role}
             </span>
