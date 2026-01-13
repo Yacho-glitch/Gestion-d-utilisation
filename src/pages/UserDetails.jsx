@@ -31,7 +31,7 @@ export default function UserDetails() {
             {user.name}
           </h2>
           <p className="opacity-90">
-            User Profile
+            Profile d'utilisateur
           </p>
         </div>
 
@@ -65,14 +65,14 @@ export default function UserDetails() {
             </span>
           </div>
 
-          <div className="flex items-center justify-between">
+          {/* <div className="flex items-center justify-between">
             <span className="text-gray-500 font-medium">
-              User ID
+              Utilisateur ID
             </span>
             <span className="text-gray-800">
               #{user.id}
             </span>
-          </div>
+          </div> */}
 
         </div>
 
@@ -89,7 +89,7 @@ export default function UserDetails() {
             to={`/edit/${user.id}`}
             className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600"
           >
-            Edit User
+            Modifier utilisateur
           </Link>
         </div>
 

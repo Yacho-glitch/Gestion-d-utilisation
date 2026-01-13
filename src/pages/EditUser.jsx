@@ -15,7 +15,7 @@ export default function EditUser() {
     if (!user) {
         return (
             <p className="text-center text-gray-500 mt-20">
-                User not found
+                aucun utilisateur trouvé.
             </p>
         )
     }

@@ -9,13 +9,13 @@ export default function UserList({ users }) {
         return (
             <div className="text-center py-20">
                 <p className="text-gray-500 text-lg">
-                    No users found.
+                  aucun utilisateur trouvé.
                 </p>
-                <Link
+                {/* <Link
                     to="/add"
                     className="inline-block mt-4 bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
                 >Add your first user
-                </Link>
+                </Link> */}
             </div>
         )
     }
