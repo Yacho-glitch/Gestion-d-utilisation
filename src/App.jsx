@@ -1,4 +1,4 @@
-import { Routes, Route, Link } from "react-router-dom"
+import { Routes, Route, Link, Navigate } from "react-router-dom"
 import Users from "./pages/Users"
 import User from "./pages/User"
 
@@ -27,6 +27,7 @@ function App() {
       {/* Pages */}
       <main className="max-w-7xl mx-auto px-4">
         <Routes>
+          <Route path="/" element={<Navigate to="/users" replace/>}/>
           <Route path="/users" element={<Users />} />
           <Route path="/user/:id" element={<User />} />
         </Routes>
