@@ -27,7 +27,7 @@ function App() {
       {/* Pages */}
       <main className="max-w-7xl mx-auto px-6 py-8">
         <Routes>
-          <Route path="/" element={<Navigate to="/users" replace />} />
+          <Route path="/" element={<Navigate to="/users" replace />} />    
           <Route path="/users" element={<Users />} />
           <Route path="/user/:id" element={<User />} />
         </Routes>
