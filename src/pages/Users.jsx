@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { createPortal } from "react-dom"
 import { useSelector, useDispatch } from "react-redux"
 import { addUser, deleteUser } from "../store/usersSlice"
@@ -11,13 +11,15 @@ export default function Users() {
   const users = useSelector(state => state.users.list)
   const dispatch = useDispatch()
 
+  const [usersByRole, setUsersByRole] = useState([]);
+  const [selectedRole, setSelectedRole] = useState('All');
+
   //intialize form object
   const [form, setForm] = useState({
     name: "",
     email: "",
     role: "User"
   })
-
   //state responsable to the form portal
   const [isFormOpen, setIsFormOpen] = useState(false)
 
@@ -39,6 +41,7 @@ export default function Users() {
 
     //make the form state Empty
     setForm({ name: "", email: "", role: "User" })
+
     setIsFormOpen(false)//close the portal
   }
 
@@ -50,6 +53,26 @@ export default function Users() {
       dispatch(deleteUser(id))
     }
   }
+
+  const filterByRole = (e) => {
+    const { value } = e.target;
+    if (value === 'All') {
+      setUsersByRole([...users])
+    } else {
+      setUsersByRole([...users.filter(user => user.role === value)])
+    }
+    setSelectedRole(value)
+  }
+  useEffect(() => {
+    if (users) {
+      if (selectedRole === 'All') {
+        setUsersByRole([...users])
+      } else {
+        setUsersByRole([...users.filter(user => user.role === selectedRole)])
+      }
+    }
+  }, [users])
+
 
   return (
     <>
@@ -152,6 +175,20 @@ export default function Users() {
                 Gérez tous vos utilisateurs
               </p>
             </div>
+            <div className="w-80 flex">
+              <select
+                name="role"
+                value={selectedRole}
+                onChange={filterByRole}
+                className="w-full border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
+              >
+                <option value="User">User</option>
+                <option value="Admin">Admin</option>
+                <option value="Manager">Manager</option>
+                <option value="All">All</option>
+              </select>
+
+            </div>
             <div className="flex items-center gap-3">
               <span className="text-sm text-slate-600 bg-white px-4 py-2 rounded-xl border border-slate-200 font-medium">
                 Total: {users.length}
@@ -194,7 +231,7 @@ export default function Users() {
                 </thead>
 
                 <tbody className="divide-y divide-slate-200">
-                  {users.map(user => (
+                  {usersByRole.map(user => (
                     <tr
                       key={user.id}
                       className="hover:bg-slate-50 transition-colors"
