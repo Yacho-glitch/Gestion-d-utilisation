@@ -1,17 +1,21 @@
 import { useState } from "react"
+import { createPortal } from "react-dom"
 import { useSelector, useDispatch } from "react-redux"
-import { addUser, deleteUser } from "../store/usersSlice"
+import { addUser, deleteUser, deleteAll } from "../store/usersSlice"
 import { Link } from "react-router-dom"
+
 
 export default function Users() {
   const users = useSelector(state => state.users.list)
   const dispatch = useDispatch()
-  
+
   const [form, setForm] = useState({
     name: "",
     email: "",
     role: "User"
   })
+
+  const [isFormOpen, setIsFormOpen] = useState(false)
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -20,8 +24,9 @@ export default function Users() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    dispatch(addUser({ id: Date.now(), ...form }))
+    dispatch(addUser({ id: users.length + 1, ...form }))
     setForm({ name: "", email: "", role: "User" })
+    setIsFormOpen(false)
   }
 
   const handleDelete = (id) => {
@@ -31,101 +36,131 @@ export default function Users() {
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-      
-      {/* Add User Form - Left Side */}
-      <div className="lg:col-span-1">
-        <div className="bg-white shadow-lg rounded-xl p-6 sticky top-6">
-          <h2 className="text-xl font-semibold mb-4 text-gray-800">
-            Ajouter Utilisateur
-          </h2>
-
-          <form onSubmit={handleSubmit} className="space-y-4">
-            
-            {/* Name */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Nom
-              </label>
-              <input
-                type="text"
-                name="name"
-                value={form.name}
-                onChange={handleChange}
-                required
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Entrez le nom"
-              />
-            </div>
-
-            {/* Email */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Email
-              </label>
-              <input
-                type="email"
-                name="email"
-                value={form.email}
-                onChange={handleChange}
-                required
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="email@example.com"
-              />
-            </div>
-
-            {/* Role */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Role
-              </label>
-              <select
-                name="role"
-                value={form.role}
-                onChange={handleChange}
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    <>
+      {isFormOpen && createPortal(
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center" >
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-lg p-6 w-full max-w-md m-4" >
+            <div className="mb-6 flex justify-between items-start">
+              <div>
+                <h2 className="text-xl font-bold text-slate-800 mb-1">
+                  Ajouter Utilisateur
+                </h2>
+                <p className="text-sm text-slate-500">
+                  Remplissez le formulaire ci-dessous
+                </p>
+              </div>
+              <button
+                onClick={() => setIsFormOpen(false)}
+                className="text-slate-400 hover:text-slate-600 transition-colors"
               >
-                <option value="User">User</option>
-                <option value="Admin">Admin</option>
-                <option value="Manager">Manager</option>
-              </select>
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
             </div>
 
-            {/* Submit */}
-            <button
-              type="submit"
-              className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition font-medium"
-            >
-              Ajouter
-            </button>
-          </form>
-        </div>
-      </div>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              {/* Name */}
+              <div>
+                <label className="block text-xs font-medium text-slate-600 mb-2">
+                  Nom complet
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  value={form.name}
+                  onChange={handleChange}
+                  required
+                  className="w-full border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
+                  placeholder="Entrez le nom"
+                />
+              </div>
 
-      {/* User List - Right Side */}
-      <div className="lg:col-span-2">
-        <div className="bg-white shadow-lg rounded-xl overflow-hidden">
-          
+              {/* Email */}
+              <div>
+                <label className="block text-xs font-medium text-slate-600 mb-2">
+                  Adresse Email
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  value={form.email}
+                  onChange={handleChange}
+                  required
+                  className="w-full border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
+                  placeholder="email@example.com"
+                />
+              </div>
+
+              {/* Role */}
+              <div>
+                <label className="block text-xs font-medium text-slate-600 mb-2">
+                  Rôle
+                </label>
+                <select
+                  name="role"
+                  value={form.role}
+                  onChange={handleChange}
+                  className="w-full border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
+                >
+                  <option value="User">User</option>
+                  <option value="Admin">Admin</option>
+                  <option value="Manager">Manager</option>
+                </select>
+              </div>
+
+              {/* Submit */}
+              <button
+                type="submit"
+                className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-3 rounded-xl hover:from-indigo-700 hover:to-purple-700 transition-all font-medium shadow-sm hover:shadow-md"
+              >
+                Ajouter
+              </button>
+            </form>
+          </div>
+        </div>,
+        document.body
+      )}
+
+      <div className="grid grid-cols-1 gap-6">
+        {/* User List */}
+        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+
           {/* Header */}
-          <div className="px-6 py-4 border-b bg-gray-50 flex justify-between items-center">
-            <h2 className="text-lg font-semibold text-gray-800">
-              Liste d'utilisateurs
-            </h2>
-            <span className="text-sm text-gray-600 bg-blue-100 px-3 py-1 rounded-full">
-              Total: {users.length}
-            </span>
+          <div className="px-6 py-5 border-b border-slate-200 bg-gradient-to-br from-indigo-50 to-purple-50 flex justify-between items-center">
+            <div>
+              <h2 className="text-lg font-bold text-slate-800">
+                Liste d'utilisateurs
+              </h2>
+              <p className="text-xs text-slate-500 mt-0.5">
+                Gérez tous vos utilisateurs
+              </p>
+            </div>
+            <div className="flex items-center gap-3">
+              <span className="text-sm text-slate-600 bg-white px-4 py-2 rounded-xl border border-slate-200 font-medium">
+                Total: {users.length}
+              </span>
+              <button
+                onClick={() => setIsFormOpen(true)}
+                className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-2 rounded-xl hover:from-indigo-700 hover:to-purple-700 transition-all font-medium text-sm"
+              >
+                Ajouter
+              </button>
+            </div>
           </div>
 
           {/* Empty State */}
           {users.length === 0 ? (
-            <div className="text-center py-20">
-              <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-              </svg>
-              <p className="text-gray-500 text-lg mt-4">
+            <div className="text-center py-20 px-6">
+              <div className="w-20 h-20 mx-auto bg-gradient-to-br from-indigo-100 to-purple-100 rounded-2xl flex items-center justify-center mb-4">
+                <svg className="h-10 w-10 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+              </div>
+              <p className="text-slate-800 text-lg font-semibold mt-4">
                 Aucun utilisateur trouvé
               </p>
-              <p className="text-gray-400 text-sm mt-2">
+              <p className="text-slate-500 text-sm mt-2">
                 Ajoutez votre premier utilisateur en utilisant le formulaire
               </p>
             </div>
@@ -133,38 +168,37 @@ export default function Users() {
             /* Table */
             <div className="overflow-x-auto">
               <table className="min-w-full text-sm">
-                <thead className="bg-gray-50 text-gray-600 uppercase text-xs">
+                <thead className="bg-slate-50 text-slate-600 uppercase text-xs border-b border-slate-200">
                   <tr>
-                    <th className="px-6 py-3 text-left">Nom</th>
-                    <th className="px-6 py-3 text-left">Email</th>
-                    <th className="px-6 py-3 text-left">Role</th>
-                    <th className="px-6 py-3 text-right">Actions</th>
+                    <th className="px-6 py-4 text-left font-semibold">Nom</th>
+                    <th className="px-6 py-4 text-left font-semibold">Email</th>
+                    <th className="px-6 py-4 text-left font-semibold">Rôle</th>
+                    <th className="px-6 py-4 text-right font-semibold">Actions</th>
                   </tr>
                 </thead>
 
-                <tbody className="divide-y divide-gray-200">
+                <tbody className="divide-y divide-slate-200">
                   {users.map(user => (
                     <tr
                       key={user.id}
-                      className="hover:bg-gray-50 transition"
+                      className="hover:bg-slate-50 transition-colors"
                     >
-                      <td className="px-6 py-4 font-medium text-gray-800">
+                      <td className="px-6 py-4 font-semibold text-slate-800">
                         {user.name}
                       </td>
 
-                      <td className="px-6 py-4 text-gray-600">
+                      <td className="px-6 py-4 text-slate-600">
                         {user.email}
                       </td>
 
                       <td className="px-6 py-4">
                         <span
-                          className={`px-3 py-1 rounded-full text-xs font-semibold
-                            ${
-                              user.role === 'Admin'
-                                ? 'bg-red-100 text-red-600'
-                                : user.role === 'Manager'
-                                ? 'bg-yellow-100 text-yellow-600'
-                                : 'bg-blue-100 text-blue-600'
+                          className={`px-3 py-1 rounded-full text-xs font-medium
+                            ${user.role === 'Admin'
+                              ? 'bg-rose-100 text-rose-700'
+                              : user.role === 'Manager'
+                                ? 'bg-amber-100 text-amber-700'
+                                : 'bg-indigo-100 text-indigo-700'
                             }
                           `}
                         >
@@ -172,20 +206,22 @@ export default function Users() {
                         </span>
                       </td>
 
-                      <td className="px-6 py-4 text-right space-x-3">
-                        <Link
-                          to={`/user/${user.id}`}
-                          className="inline-block text-blue-600 hover:text-blue-800 font-medium"
-                        >
-                          Voir
-                        </Link>
+                      <td className="px-6 py-4 text-right">
+                        <div className="flex justify-end gap-2">
+                          <Link
+                            to={`/user/${user.id}`}
+                            className="inline-flex items-center px-3 py-1.5 text-indigo-600 hover:text-white hover:bg-indigo-600 border border-indigo-200 hover:border-indigo-600 rounded-lg transition-all font-medium"
+                          >
+                            Voir
+                          </Link>
 
-                        <button
-                          onClick={() => handleDelete(user.id)}
-                          className="text-red-600 hover:text-red-800 font-medium"
-                        >
-                          Supprimer
-                        </button>
+                          <button
+                            onClick={() => handleDelete(user.id)}
+                            className="inline-flex items-center px-3 py-1.5 text-red-600 hover:text-white hover:bg-red-600 border border-red-200 hover:border-red-600 rounded-lg transition-all font-medium"
+                          >
+                            Supprimer
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))}
@@ -196,7 +232,6 @@ export default function Users() {
           )}
         </div>
       </div>
-
-    </div>
+    </>
   )
 }
