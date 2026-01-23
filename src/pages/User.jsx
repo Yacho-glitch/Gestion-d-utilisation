@@ -32,15 +32,17 @@ export default function User() {
   if (!user) {
     return (
       <div className="text-center py-20">
-        <svg className="mx-auto h-16 w-16 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-        <p className="text-gray-500 text-lg mt-4">
+        <div className="w-16 h-16 mx-auto bg-slate-100 rounded-full flex items-center justify-center">
+          <svg className="h-8 w-8 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <p className="text-slate-600 text-base font-medium mt-4">
           Utilisateur introuvable
         </p>
         <Link 
           to="/users" 
-          className="inline-block mt-4 text-blue-600 hover:underline font-medium"
+          className="inline-block mt-4 text-indigo-600 hover:text-indigo-700 font-medium px-4 py-2 hover:bg-indigo-50 rounded-lg transition-colors"
         >
           ← Retour à la liste
         </Link>
@@ -79,27 +81,27 @@ export default function User() {
     <div className="max-w-4xl mx-auto">
       
       {/* Card */}
-      <div className="bg-white shadow-xl rounded-2xl overflow-hidden">
+      <div className="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm">
         
         {/* Header */}
-        <div className="bg-gradient-to-r from-blue-600 to-indigo-600 p-6 text-white">
+        <div className="bg-gradient-to-br from-indigo-50 to-purple-50 p-8 border-b border-slate-200">
           <div className="flex justify-between items-start">
             <div>
-              <h2 className="text-3xl font-bold mb-2">
+              <h2 className="text-3xl font-bold mb-1 text-slate-800">
                 {user.name}
               </h2>
-              <p className="opacity-90 text-blue-100">
+              <p className="text-slate-500 text-sm">
                 Profile d'utilisateur
               </p>
             </div>
             <span
-              className={`px-4 py-2 rounded-full text-sm font-semibold shadow-lg
+              className={`px-4 py-2 rounded-full text-xs font-medium
                 ${
                   user.role === 'Admin'
-                    ? 'bg-red-500 text-white'
+                    ? 'bg-rose-100 text-rose-700'
                     : user.role === 'Manager'
-                    ? 'bg-yellow-500 text-white'
-                    : 'bg-white text-blue-600'
+                    ? 'bg-amber-100 text-amber-700'
+                    : 'bg-indigo-100 text-indigo-700'
                 }
               `}
             >
@@ -118,38 +120,38 @@ export default function User() {
               {/* Info Rows */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 
-                <div className="border-b pb-4">
-                  <label className="text-sm text-gray-500 font-medium block mb-1">
+                <div className="bg-slate-50 rounded-xl p-4">
+                  <label className="text-xs text-slate-500 font-medium block mb-2">
                     Nom complet
                   </label>
-                  <p className="text-gray-800 font-semibold text-lg">
+                  <p className="text-slate-800 font-semibold">
                     {user.name}
                   </p>
                 </div>
 
-                <div className="border-b pb-4">
-                  <label className="text-sm text-gray-500 font-medium block mb-1">
+                <div className="bg-slate-50 rounded-xl p-4">
+                  <label className="text-xs text-slate-500 font-medium block mb-2">
                     Adresse Email
                   </label>
-                  <p className="text-gray-800 font-semibold text-lg">
+                  <p className="text-slate-800 font-semibold">
                     {user.email}
                   </p>
                 </div>
 
-                <div className="border-b pb-4">
-                  <label className="text-sm text-gray-500 font-medium block mb-1">
+                <div className="bg-slate-50 rounded-xl p-4">
+                  <label className="text-xs text-slate-500 font-medium block mb-2">
                     Rôle
                   </label>
-                  <p className="text-gray-800 font-semibold text-lg">
+                  <p className="text-slate-800 font-semibold">
                     {user.role}
                   </p>
                 </div>
 
-                <div className="border-b pb-4">
-                  <label className="text-sm text-gray-500 font-medium block mb-1">
+                <div className="bg-slate-50 rounded-xl p-4">
+                  <label className="text-xs text-slate-500 font-medium block mb-2">
                     ID Utilisateur
                   </label>
-                  <p className="text-gray-800 font-mono">
+                  <p className="text-slate-800 font-mono text-sm">
                     #{user.id}
                   </p>
                 </div>
@@ -160,16 +162,16 @@ export default function User() {
               <div className="flex gap-3 pt-4">
                 <button
                   onClick={() => setIsEditing(true)}
-                  className="flex-1 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition font-medium"
+                  className="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-3 rounded-xl hover:from-indigo-700 hover:to-purple-700 transition-all font-medium shadow-sm hover:shadow-md"
                 >
-                  ✏️ Modifier
+                  Modifier
                 </button>
                 
                 <button
                   onClick={handleDelete}
-                  className="flex-1 bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition font-medium"
+                  className="flex-1 bg-red-600 text-white px-6 py-3 rounded-xl hover:bg-red-700 transition-all font-medium shadow-sm hover:shadow-md"
                 >
-                  🗑️ Supprimer
+                  Supprimer
                 </button>
               </div>
 
@@ -178,15 +180,15 @@ export default function User() {
             /* Edit Mode */
             <form onSubmit={handleUpdate} className="space-y-6">
               
-              <div className="bg-blue-50 border-l-4 border-blue-600 p-4 mb-6">
-                <p className="text-sm text-blue-800">
+              <div className="bg-indigo-50 rounded-xl p-4 mb-6">
+                <p className="text-sm text-indigo-800">
                   Vous êtes en mode édition. Modifiez les champs ci-dessous.
                 </p>
               </div>
 
               {/* Name */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-xs font-medium text-slate-600 mb-2">
                   Nom complet
                 </label>
                 <input
@@ -195,14 +197,14 @@ export default function User() {
                   value={form.name}
                   onChange={handleChange}
                   required
-                  className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
                   placeholder="Entrez le nom"
                 />
               </div>
 
               {/* Email */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-xs font-medium text-slate-600 mb-2">
                   Adresse Email
                 </label>
                 <input
@@ -211,21 +213,21 @@ export default function User() {
                   value={form.email}
                   onChange={handleChange}
                   required
-                  className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
                   placeholder="email@example.com"
                 />
               </div>
 
               {/* Role */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-xs font-medium text-slate-600 mb-2">
                   Rôle
                 </label>
                 <select
                   name="role"
                   value={form.role}
                   onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full border border-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
                 >
                   <option value="User">User</option>
                   <option value="Admin">Admin</option>
@@ -237,17 +239,17 @@ export default function User() {
               <div className="flex gap-3 pt-2">
                 <button
                   type="submit"
-                  className="flex-1 bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition font-medium"
+                  className="flex-1 bg-green-600 text-white px-6 py-3 rounded-xl hover:bg-green-700 transition-all font-medium shadow-sm hover:shadow-md"
                 >
-                  ✓ Enregistrer
+                  Enregistrer
                 </button>
                 
                 <button
                   type="button"
                   onClick={handleCancel}
-                  className="flex-1 bg-gray-500 text-white px-6 py-3 rounded-lg hover:bg-gray-600 transition font-medium"
+                  className="flex-1 bg-slate-500 text-white px-6 py-3 rounded-xl hover:bg-slate-600 transition-all font-medium shadow-sm hover:shadow-md"
                 >
-                  ✗ Annuler
+                  Annuler
                 </button>
               </div>
 
@@ -257,12 +259,12 @@ export default function User() {
         </div>
 
         {/* Footer */}
-        <div className="bg-gray-50 px-8 py-4 border-t">
+        <div className="bg-slate-50 px-8 py-4 border-t border-slate-200">
           <Link
             to="/users"
-            className="text-gray-600 hover:text-blue-600 font-medium inline-flex items-center"
+            className="text-slate-600 hover:text-indigo-600 font-medium inline-flex items-center transition-colors"
           >
-            <svg className="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
             Retour à la liste
