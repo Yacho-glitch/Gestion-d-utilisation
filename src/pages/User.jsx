@@ -4,23 +4,31 @@ import { useSelector, useDispatch } from 'react-redux'
 import { updateUser, deleteUser } from '../store/usersSlice'
 
 export default function User() {
+
+  //get the id of user from the url
   const { id } = useParams()
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  
-  const user = useSelector(state => 
+
+  //get user from global state by id
+  const user = useSelector(state =>
     state.users.list.find(u => u.id == Number(id))
   )
-  
+
   const [isEditing, setIsEditing] = useState(false)
+
+  //intialize form object
   const [form, setForm] = useState({
     name: '',
     email: '',
     role: 'User'
   })
 
+  //once user found it or updated excute the code
   useEffect(() => {
+    //check are not undefinded
     if (user) {
+      //update form
       setForm({
         name: user.name,
         email: user.email,
@@ -29,6 +37,7 @@ export default function User() {
     }
   }, [user])
 
+  //if user don't exist we show this
   if (!user) {
     return (
       <div className="text-center py-20">
@@ -40,8 +49,8 @@ export default function User() {
         <p className="text-slate-600 text-base font-medium mt-4">
           Utilisateur introuvable
         </p>
-        <Link 
-          to="/users" 
+        <Link
+          to="/users"
           className="inline-block mt-4 text-indigo-600 hover:text-indigo-700 font-medium px-4 py-2 hover:bg-indigo-50 rounded-lg transition-colors"
         >
           ← Retour à la liste
@@ -50,8 +59,13 @@ export default function User() {
     )
   }
 
+  //handel the input changes function
   const handleChange = (e) => {
+
+    //destructing the name and value of the input
     const { name, value } = e.target
+
+    //update the form state
     setForm(prev => ({ ...prev, [name]: value }))
   }
 
@@ -79,12 +93,12 @@ export default function User() {
 
   return (
     <div className="max-w-4xl mx-auto">
-      
+
       {/* Card */}
       <div className="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm">
-        
+
         {/* Header */}
-        <div className="bg-gradient-to-br from-indigo-50 to-purple-50 p-8 border-b border-slate-200">
+        <div className="bg-linear-to-br from-indigo-50 to-purple-50 p-8 border-b border-slate-200">
           <div className="flex justify-between items-start">
             <div>
               <h2 className="text-3xl font-bold mb-1 text-slate-800">
@@ -96,10 +110,9 @@ export default function User() {
             </div>
             <span
               className={`px-4 py-2 rounded-full text-xs font-medium
-                ${
-                  user.role === 'Admin'
-                    ? 'bg-rose-100 text-rose-700'
-                    : user.role === 'Manager'
+                ${user.role === 'Admin'
+                  ? 'bg-rose-100 text-rose-700'
+                  : user.role === 'Manager'
                     ? 'bg-amber-100 text-amber-700'
                     : 'bg-indigo-100 text-indigo-700'
                 }
@@ -112,14 +125,14 @@ export default function User() {
 
         {/* Content */}
         <div className="p-8">
-          
+
           {!isEditing ? (
             /* View Mode */
             <div className="space-y-6">
-              
+
               {/* Info Rows */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                
+
                 <div className="bg-slate-50 rounded-xl p-4">
                   <label className="text-xs text-slate-500 font-medium block mb-2">
                     Nom complet
@@ -146,27 +159,17 @@ export default function User() {
                     {user.role}
                   </p>
                 </div>
-
-                <div className="bg-slate-50 rounded-xl p-4">
-                  <label className="text-xs text-slate-500 font-medium block mb-2">
-                    ID Utilisateur
-                  </label>
-                  <p className="text-slate-800 font-mono text-sm">
-                    #{user.id}
-                  </p>
-                </div>
-
               </div>
 
               {/* Action Buttons */}
               <div className="flex gap-3 pt-4">
                 <button
                   onClick={() => setIsEditing(true)}
-                  className="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-3 rounded-xl hover:from-indigo-700 hover:to-purple-700 transition-all font-medium shadow-sm hover:shadow-md"
+                  className="flex-1 bg-linear-to-r from-indigo-600 to-purple-600 text-white px-6 py-3 rounded-xl hover:from-indigo-700 hover:to-purple-700 transition-all font-medium shadow-sm hover:shadow-md"
                 >
                   Modifier
                 </button>
-                
+
                 <button
                   onClick={handleDelete}
                   className="flex-1 bg-red-600 text-white px-6 py-3 rounded-xl hover:bg-red-700 transition-all font-medium shadow-sm hover:shadow-md"
@@ -179,7 +182,7 @@ export default function User() {
           ) : (
             /* Edit Mode */
             <form onSubmit={handleUpdate} className="space-y-6">
-              
+
               <div className="bg-indigo-50 rounded-xl p-4 mb-6">
                 <p className="text-sm text-indigo-800">
                   Vous êtes en mode édition. Modifiez les champs ci-dessous.
@@ -243,7 +246,7 @@ export default function User() {
                 >
                   Enregistrer
                 </button>
-                
+
                 <button
                   type="button"
                   onClick={handleCancel}
