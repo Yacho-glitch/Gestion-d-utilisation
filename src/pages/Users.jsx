@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { createPortal } from "react-dom"
 import { useSelector, useDispatch } from "react-redux"
-import { addUser, deleteUser } from "../store/usersSlice"
+import { addUser, deleteAll, deleteUser } from "../store/usersSlice"
 import { Link } from "react-router-dom"
 
 
@@ -199,6 +199,13 @@ export default function Users() {
               >
                 Ajouter
               </button>
+              <button
+                onClick={() => dispatch(deleteAll())}
+                className="bg-red-500 text-white px-4 py-2 rounded-xl hover:from-indigo-700 hover:to-purple-700 transition-all font-medium text-sm"
+              >
+                delete all
+              </button>
+
             </div>
           </div>
 

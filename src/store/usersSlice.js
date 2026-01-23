@@ -37,10 +37,14 @@ const usersSlice = createSlice({
         localStorage.setItem("users", JSON.stringify(state.list))//and update the localStorage
 
       }
+    },
+    deleteAll: (state) => {
+      state.list = [];
+      localStorage.removeItem('users')
     }
 
   }
 })
 
-export const { addUser, deleteUser, updateUser } = usersSlice.actions;
+export const { addUser, deleteUser, updateUser, deleteAll } = usersSlice.actions;
 export default usersSlice.reducer
